@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIT Bank</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="./favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+    <h1>Welcome to BIT Bank</h1>
+    <div class="container">
+        <h2>Sign in</h2>
+        <form method="POST" action="/login">
+            <input class="input" type="text" name="email" placeholder="User ID or Email" required> <br>
+            <input class="input" type="password" placeholder="User password" name="password" required> <br>
+            <span id="remember_me"><input class="remember_me_checkbox" type="checkbox">&nbsp;Remember me</span> <br> 
+            <button type="submit">SIGN IN</button>
+
+            <p><a href="/forgotpass">Forgot password</a></p>
+            <p>New User?&nbsp;<a href="/signup">Sign Up</a></p>
+        </form>
+    </div>
+</body>
+</html>
