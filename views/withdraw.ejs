@@ -10,10 +10,10 @@
 <body>
     <h1>Welcome to BIT Bank</h1>
     <div class="container">
-        <a href="./User"><i class="fa-solid fa-circle-arrow-left back_icon"></i></a><h2><%= name %></h2>
-        <p>Acc no : <%= acc_no %></p>
+        <a href="./login"><i class="fa-solid fa-circle-arrow-left back_icon" onclick="user()"></i></a><h2><%= name %></h2>
+        <p style="text-align: center; display: inline;">Acc no : <%= acc_no %></p>
         <form action="/withdraw" method="POST">
-            <span style="font-weight: bold; font-size: large;">Withdraw Money</span><br><br><br>
+            <span style="font-weight: bold; font-size: large; text-align: center;">Withdraw Money instantly!!</span><br><br><br>
             <span style="font-weight: bold; font-size: large;">Enter your upi id</span><br><br>
             <input class="input" type="text" required placeholder="Enter upi id">
             <input class="input" type="number" required placeholder="Enter amount:" name="amount">
@@ -23,6 +23,9 @@
     <script>
         document.getElementsByClassName("container")[0].addEventListener("DOMContentLoaded",(e)=>{
             e.preventDefault()
+            function user(){
+            location.href="./login"
+        }
         })
     </script>
 </body>

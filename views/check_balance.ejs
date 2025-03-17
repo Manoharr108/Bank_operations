@@ -10,7 +10,7 @@
 <body>
     <h1>Welcome to BIT Bank</h1>
     <div class="container">
-        <a href="/login"><i class="fa-solid fa-circle-arrow-left back_icon"></i></a><h2><%= name %></h2>
+            <a><i class="fa-solid fa-circle-arrow-left back_icon" onclick="user()"></i></a><h2><%= name %></h2>
         <p>Acc no : <%= acc_no %></p>
         <form action="#">
             <span class="balance">Your Balance :  <hr><span class="balance_amount"> &#8377;&nbsp;<%= balance %></span></span>
@@ -20,6 +20,9 @@
         document.getElementsByClassName("container")[0].addEventListener("DOMContentLoaded",(e)=>{
             e.preventDefault()
         })
+        function user(){
+            location.href="./login"
+        }
     </script>
 </body>
 </html>

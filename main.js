@@ -42,15 +42,18 @@ app.get("/signup", (req, res) => {
 // })
 
 app.post("/register", async (req, res) => {
-  const { name, email, password, cpassword } = req.body;
+  const { name, email,number, password, cpassword } = req.body;
   try {
+    if(number.length>10 || number.length<10){
+      return res.send("Please check your phone number!!")
+    }
     if (password !== cpassword) {
       return res.send("password doesn't match!");
     }
 
     const [result] = await db.query(
-      "INSERT INTO customers (cus_name, cus_email, cus_pass) VALUES (?, ?, ?)",
-      [name, email, password]
+      "INSERT INTO customers (cus_name, cus_email,cus_phone, cus_pass) VALUES (?, ?, ?,?)",
+      [name, email,number, password]
     );
 
     
@@ -62,6 +65,7 @@ app.post("/register", async (req, res) => {
         cuserID = {
             id: user[0].cus_id,
             name: user[0].cus_name,
+            phone: user[0].cus_phone
         };
     }
     await db.query(
@@ -69,7 +73,7 @@ app.post("/register", async (req, res) => {
       [cuserID.id + 1, 0.0, cuserID.id]
     );
     // console.log(cuserID.id, cuserID.name)
-    return res.render("user", { name: cuserID.name[0].toUpperCase()+cuserID.name.slice(1), message: "Welcome" }); //end
+    return res.render("user", { name: cuserID.name[0].toUpperCase()+cuserID.name.slice(1), message: "Welcome", phone:9845 }); //end
 
   } catch (err) {
     console.log("failed registering user." + err.message);
@@ -93,11 +97,13 @@ app.post("/login", async (req, res) => {
         cuserID = {
             id: user[0].cus_id,
             name: user[0].cus_name,
+            phone: user[0].cus_phone
         };
         // console.log(cuserID)
       return res.render("user", {
         name: user[0].cus_name[0].toUpperCase() + user[0].cus_name.slice(1),
         message: "Welcome back",
+        phone: user[0].phone
       });
     }
     
@@ -143,21 +149,21 @@ app.post("/withdraw",async(req,res)=>{
     let prevbal = acc[0].acc_bal;
     prevbal = Number.parseFloat(prevbal);
     if(prevbal<amount){
-        return res.send("Insufficient balance bitch!! " + prevbal)
+        return res.send("Insufficient balance yeh!!!! " + prevbal)
     }
     let finalamount = prevbal - amount;
     finalamount = Number.parseFloat(finalamount);
     await db.query("UPDATE accounts SET acc_bal = ?  WHERE cus_id = ?",[finalamount ,cuserID.id])
-    return res.send("successfully withdrawed bitch")
+    return res.send("successfully withdrawed yeh!!")
 })
 app.get("/deposit",(req,res)=>{
-    res.render("deposit");
+    return res.render("deposit");
 })
 app.post("/deposit",async(req,res)=>{
     try{
         let {amount} = req.body;
         amount = Number.parseFloat(amount);
-        console.log(amount)
+        // console.log(amount)
         if(!cuserID){
             return
         }
@@ -166,15 +172,17 @@ app.post("/deposit",async(req,res)=>{
         prevbal = Number.parseFloat(prevbal);
         let finalamount = prevbal + amount;
         await db.query("UPDATE accounts SET acc_bal = ?  WHERE acc_no = ?",[finalamount ,acc[0].acc_no])
-        return res.send("successfully deposited bitch")
+        return res.send("successfully deposited yeh!!")
     }catch(err){
         console.log(err.message);
     }
 })
 app.get("/transfer",(req,res)=>{
-    res.render('transfer')
+    return res.render('transfer')
 })
-
+app.get("/login",(req,res)=>{
+  return res.render("user", { name: cuserID.name[0].toUpperCase()+cuserID.name.slice(1), message: "Welcome" })
+})
 
 app.post("/transfer",async(req,res)=>{
     let {amount, accno} = req.body;
